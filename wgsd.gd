@@ -44,7 +44,7 @@ class wgsd:
 	var raw_file: String = ""
 	
 	# regenerate script by given generated nodes.
-	# not including comments etc. that's are not stored,
+	# not including comments etc. that are not stored,
 	# ignored while parsing.
 	func generate():
 		var generate = ""
