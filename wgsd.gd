@@ -43,6 +43,37 @@ class wgsd:
 	var nodes = []
 	var raw_file: String = ""
 	
+	# regenerate script by given generated nodes.
+	# not including comments etc. that's are not stored,
+	# ignored while parsing.
+	func generate():
+		var generate = ""
+		for node in self.nodes:
+			generate += node.block_name + " =\n"
+			
+			for node_key in node.matched_datas:
+				var val = node.matched_datas[node_key]
+				
+				generate += str(node_key) + ";" + str(val) + ";\n"
+			
+			generate += "end; " + node.block_name + ";\n"
+			
+		return generate
+				
+	func _reverse_pair_values(val):
+		match val:
+			true:
+				return "true";
+				
+			false:
+				return "false";
+				
+			"":
+				return "empty";
+				
+			_: 
+				return str(val)
+	
 	func _pair_values(val):
 		match val:
 			"true":
@@ -62,6 +93,12 @@ class wgsd:
 				else:
 					return val
 					
+	
+	func change_key(block, key, replace):
+		for node in self.nodes:
+			if node.block_name == block:
+				if node.matched_datas.has(key):
+					node.matched_datas[key] = self._reverse_pair_values(replace)
 	
 	# block can be undefined
 	func find_key(block, key):
@@ -116,3 +153,4 @@ class wgsd:
 							continue
 							
 						self._verify()
+
