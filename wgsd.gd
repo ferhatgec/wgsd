@@ -43,6 +43,14 @@ class wgsd:
 	var nodes = []
 	var raw_file: String = ""
 	
+	func clear():
+		self.nodes = []
+		self.raw_file = ""
+	
+	func reparse_file(file):
+		self.clear()
+		self.parse_file(file)
+		
 	# regenerate script by given generated nodes.
 	# not including comments etc. that are not stored,
 	# ignored while parsing.
